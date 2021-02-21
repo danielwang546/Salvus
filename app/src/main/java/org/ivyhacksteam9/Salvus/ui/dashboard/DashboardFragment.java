@@ -42,7 +42,7 @@ public class DashboardFragment extends Fragment {
         });
 
         //Add listener to the button
-        Button b = (Button) getView().findViewById(R.id.button);
+        Button b = root.findViewById(R.id.button);
         b.setText("start");
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +66,7 @@ public class DashboardFragment extends Fragment {
     public void onPause() {
         super.onPause();
         timerHandler.removeCallbacks(timerRunnable);
-        Button b = (Button)getView().findViewById(R.id.button);
+        Button b = getView().findViewById(R.id.button);
         b.setText("start");
     }
 
