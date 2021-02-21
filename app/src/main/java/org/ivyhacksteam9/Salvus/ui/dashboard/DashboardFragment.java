@@ -4,9 +4,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,9 @@ import org.ivyhacksteam9.Salvus.R;
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
+    private TextView timerTextView;
+    private long startTime = 0;
+    private Handler timerHandler = new Handler();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,11 +40,55 @@ public class DashboardFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        //Add listener to the button
+        Button b = (Button) getView().findViewById(R.id.button);
+        b.setText("start");
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+                if (b.getText().equals("stop")) {
+                    timerHandler.removeCallbacks(timerRunnable);
+                    b.setText("start");
+                } else {
+                    startTime = System.currentTimeMillis();
+                    timerHandler.postDelayed(timerRunnable, 0);
+                    b.setText("stop");
+                }
+            }
+        });
+
         return root;
     }
 
-    protected void startTimer(View view){
+    @Override
+    public void onPause() {
+        super.onPause();
+        timerHandler.removeCallbacks(timerRunnable);
+        Button b = (Button)getView().findViewById(R.id.button);
+        b.setText("start");
+    }
 
+    //Prepare timer
+    Runnable timerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            timerTextView.setText(String.format("%d:%02d", minutes, seconds));
+            if(minutes%5==0){
+                reminder(getView());
+            }
+            timerHandler.postDelayed(this, 500);
+        }
+    };
+
+    //prepare notification
+    protected void reminder(View view){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "notify9527")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle("My notification")
