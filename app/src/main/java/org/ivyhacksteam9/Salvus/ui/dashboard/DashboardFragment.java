@@ -1,8 +1,7 @@
 package org.ivyhacksteam9.Salvus.ui.dashboard;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,44 +17,36 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.ivyhacksteam9.Salvus.MainActivity;
 import org.ivyhacksteam9.Salvus.R;
+
+import java.util.Objects;
 
 public class DashboardFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
-    private TextView timerTextView;
+    private TextView timerTextView; //
     private long startTime = 0;
-    private Handler timerHandler = new Handler();
+    protected Handler timerHandler = new Handler();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        DashboardViewModel dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        timerTextView = root.findViewById(R.id.timer);
 
         //Add listener to the button
         Button b = root.findViewById(R.id.button);
-        b.setText("start");
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button b = (Button) v;
-                if (b.getText().equals("stop")) {
-                    timerHandler.removeCallbacks(timerRunnable);
-                    b.setText("start");
-                } else {
-                    startTime = System.currentTimeMillis();
-                    timerHandler.postDelayed(timerRunnable, 0);
-                    b.setText("stop");
-                }
+        b.setOnClickListener(v -> {
+            Button b1 = (Button) v;
+            if (b1.getText().equals(requireContext().getResources().getString(R.string.timerEnd))) {
+                timerHandler.removeCallbacks(timerRunnable);
+                b1.setText(getContext().getResources().getString(R.string.timerStart));
+            } else {
+                startTime = System.currentTimeMillis();
+                timerHandler.postDelayed(timerRunnable, 0);
+                b1.setText(getContext().getResources().getString(R.string.timerEnd));
             }
         });
 
@@ -67,11 +58,13 @@ public class DashboardFragment extends Fragment {
         super.onPause();
         timerHandler.removeCallbacks(timerRunnable);
         Button b = getView().findViewById(R.id.button);
-        b.setText("start");
+
+        b.setText(getContext().getResources().getString(R.string.timerStart));
     }
 
     //Prepare timer
     Runnable timerRunnable = new Runnable() {
+        @SuppressLint("DefaultLocale")
         @Override
         public void run() {
             long millis = System.currentTimeMillis() - startTime;
@@ -89,12 +82,10 @@ public class DashboardFragment extends Fragment {
 
     //prepare notification
     protected void reminder(View view){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "notify9527")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), "notify9527")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                .setContentTitle("My notification")
-                .setContentText("Much longer text that cannot fit one line...")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Much longer text that cannot fit one line..."))
+                .setContentTitle(getContext().getResources().getString(R.string.reminderNotifyTitle))
+                .setContentText(getContext().getResources().getString(R.string.reminderNotifyText))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 

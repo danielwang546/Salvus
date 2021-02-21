@@ -21,6 +21,10 @@
 
     <string name="reminderText">Stay Socially Distanced</string>
     <string name="reminderButton">Press here to start</string>
-    <string name="channel_name">\"notification_channel\"</string>
-    <string name="channel_description">\"Reminder for social distancing\"</string>
+    <string name="channel_name">notification_channel</string>
+    <string name="channel_description">Reminder for social distancing</string>
+    <string name="timerStart">Click to Start</string>
+    <string name="timerEnd">Stop Timer</string>
+    <string name="reminderNotifyTitle">Reminder: Social Distancing</string>
+    <string name="reminderNotifyText">Please remember to stay at least 6ft. away from others and avoid places with dense crowd.</string>
 </resources>
