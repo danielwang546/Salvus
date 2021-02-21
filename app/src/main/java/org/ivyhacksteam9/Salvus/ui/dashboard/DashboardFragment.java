@@ -1,5 +1,8 @@
 package org.ivyhacksteam9.Salvus.ui.dashboard;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +11,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import org.ivyhacksteam9.Salvus.MainActivity;
 import org.ivyhacksteam9.Salvus.R;
 
 public class DashboardFragment extends Fragment {
@@ -32,4 +37,16 @@ public class DashboardFragment extends Fragment {
         });
         return root;
     }
+
+    protected void startTimer(View view){
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "notify9527")
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle("My notification")
+                .setContentText("Much longer text that cannot fit one line...")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Much longer text that cannot fit one line..."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+    }
+
 }

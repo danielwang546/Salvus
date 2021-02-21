@@ -18,4 +18,9 @@
     <string name="tips_title_4">When you can be around others after you had COVID-19</string>
     <string name="tips_9">You can be around others after 10 days since symptoms first appeared if your symptoms are improving and you have not had a fever for 24 hours.</string>
     <string name="tips_10">If you had no symptoms but tested positive, you can be around others after 10 days have passed.</string>
+
+    <string name="reminderText">Stay Socially Distanced</string>
+    <string name="reminderButton">Press here to start</string>
+    <string name="channel_name">\"notification_channel\"</string>
+    <string name="channel_description">\"Reminder for social distancing\"</string>
 </resources>
