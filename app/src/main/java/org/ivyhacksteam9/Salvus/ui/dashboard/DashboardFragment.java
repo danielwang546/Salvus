@@ -2,6 +2,7 @@ package org.ivyhacksteam9.Salvus.ui.dashboard;
 
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +26,7 @@ import java.util.Objects;
 public class DashboardFragment extends Fragment {
 
     private TextView timerTextView; //
+    private NotificationManagerCompat manager;
     private long startTime = 0;
     protected Handler timerHandler = new Handler();
 
@@ -34,6 +37,7 @@ public class DashboardFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.text_dashboard);
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+        manager = NotificationManagerCompat.from(getContext());
         timerTextView = root.findViewById(R.id.timer);
 
         //Add listener to the button
@@ -73,7 +77,7 @@ public class DashboardFragment extends Fragment {
             seconds = seconds % 60;
 
             timerTextView.setText(String.format("%d:%02d", minutes, seconds));
-            if(minutes%5==0){
+            if(seconds%30==0) {
                 reminder(getView());
             }
             timerHandler.postDelayed(this, 500);
@@ -82,11 +86,14 @@ public class DashboardFragment extends Fragment {
 
     //prepare notification
     protected void reminder(View view){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), "notify9527")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), "channel9527")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                .setContentTitle(getContext().getResources().getString(R.string.reminderNotifyTitle))
+                .setContentTitle(requireContext().getResources().getString(R.string.reminderNotifyTitle))
                 .setContentText(getContext().getResources().getString(R.string.reminderNotifyText))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+
+        manager.notify(1,builder.build());
     }
 
 }
