@@ -1,6 +1,21 @@
+<?xml version = "1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Application</string>
     <string name="title_home">Tips</string>
     <string name="title_dashboard">Reminders</string>
     <string name="title_notifications">Map</string>
+    <string name="tips_title_1">How to Protect Yourself When Going Out</string>
+    <string name="tips_1">Always remember to social distance at least 6 feet (2 arm lengths) away from other people!</string>
+    <string name="tips_2">Remember to wear a mask that covers both your nose and mouth.</string>
+    <string name="tips_3">Social distancing and wearing a mask both work, but the risk of contracting the coronavirus is minimized if you do both.</string>
+    <string name="tips_4">When you come inside a building, wash your hands with soap and water. Use hand sanitizer if soap and water aren\'t available.</string>
+    <string name="tips_title_2">Symptoms to watch out for:</string>
+    <string name="tips_5">Common symptoms of COVID-19 are: fever, cough, headaches, fatigue, muscle or body aches, loss of taste or smell, sore throat, nausea, and diarrhea.</string>
+    <string name="tips_title_3">When to Quarantine</string>
+    <string name="tips_6">The difference between quarantine and isolation: Quarantine keeps someone who might have been exposed to the virus away from others. Isolation keeps someone who is infected away from others, even in their home.</string>
+    <string name="tips_7">If you have been in close contact with someone who has COVID-19, quarantine for 14 days.</string>
+    <string name="tips_8">Close contact is: being within 6 feet of someone who had COVID-19 for 15 minutes or more, or they sneezed or coughed on you.</string>
+    <string name="tips_title_4">When you can be around others after you had COVID-19</string>
+    <string name="tips_9">You can be around others after 10 days since symptoms first appeared if your symptoms are improving and you have not had a fever for 24 hours.</string>
+    <string name="tips_10">If you had no symptoms but tested positive, you can be around others after 10 days have passed.</string>
 </resources>
